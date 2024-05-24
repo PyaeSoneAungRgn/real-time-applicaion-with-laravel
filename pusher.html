@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+    <div id="playground" class="w-full h-screen flex items-center" style="background: rgb(74 222 128)">
+        <div class="w-1/2">
+            <img class="cursor-pointer w-64 mx-auto" src="/earth_spirit.png" alt="radiant">
+        </div>
+        <div class="w-1/2">
+            <img class="cursor-pointer w-64 mx-auto" src="/mars.png" alt="png">
+        </div>
+    </div>
+
+    <script src="https://js.pusher.com/8.0.1/pusher.min.js"></script>
+
+    <script>
+        var pusher = new Pusher('ns5vuegxbudmxyrdyfnb', {
+            appId: "286585",
+            secret: "zdveddmzanu54wsqw7ad",
+            wsHost: "127.0.0.1",
+            wsPort: 8080,
+            forceTLS: false,
+            enabledTransports: ['ws'],
+            cluster: ''
+        });
+
+        var channel = pusher.subscribe("character");
+
+        channel.bind('App\\Events\\CharacterUpdated', (data) => {
+            if (data.character == 'green') {
+                document.getElementById('playground').style.background = 'rgb(74 222 128)';
+            } else if (data.character == 'red') {
+                document.getElementById('playground').style.background = 'rgb(248, 113, 113)';
+            }
+        });
+    </script>
+</body>
+
+</html>
